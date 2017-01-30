@@ -1,5 +1,7 @@
 # Sessions middleware for Echo
 
+[![Build Status](https://travis-ci.org/utahta/echo-sessions.svg?branch=master)](https://travis-ci.org/utahta/echo-sessions)
+
 This is a package of sessions middleware for Echo.  
 A thin [gorilla/sessions](https://github.com/gorilla/sessions) wrapper.
 
