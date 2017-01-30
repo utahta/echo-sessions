@@ -13,7 +13,7 @@ $ go get -u github.com/utahta/echo-sessions
 
 ## Usage
 
-### Use middleware
+### Use sessions middleware
 ```go
 import (
     "github.com/boj/redistore"
@@ -27,7 +27,7 @@ e := echo.New()
 e.Use(sessions.Sessions("SESSID", store))
 ```
 
-### Start sessions
+### Start session
 ```go
 s := sessions.MustStart()
 ```
