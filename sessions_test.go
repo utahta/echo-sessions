@@ -20,7 +20,7 @@ func testSession(c echo.Context) *session {
 func TestStart(t *testing.T) {
 	c := testContext()
 
-	if _, err := Start(c); err != ErrorSessionNotFound {
+	if _, err := Start(c); err != ErrSessionNotFound {
 		t.Errorf("Expected get error session not found, got %v", err)
 	}
 
@@ -132,7 +132,7 @@ func TestSession_Get(t *testing.T) {
 	}
 
 	// test no such key
-	if err := s.Get("no_such_key", nil); err != ErrorNoSuchKey {
+	if err := s.Get("no_such_key", nil); err != ErrNoSuchKey {
 		t.Error(err)
 	}
 }

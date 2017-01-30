@@ -11,8 +11,8 @@ import (
 const ContextKey = "github.com/utahta/echo-sessions"
 
 var (
-	ErrorSessionNotFound = errors.New("Session not found")
-	ErrorNoSuchKey       = errors.New("No such key")
+	ErrSessionNotFound = errors.New("Session not found")
+	ErrNoSuchKey       = errors.New("No such key")
 )
 
 type session struct {
@@ -26,7 +26,7 @@ type session struct {
 func Start(c echo.Context) (*session, error) {
 	s, ok := c.Get(ContextKey).(*session)
 	if !ok {
-		return nil, ErrorSessionNotFound
+		return nil, ErrSessionNotFound
 	}
 
 	if s.Session != nil {
@@ -58,7 +58,7 @@ func (s *session) Set(key interface{}, v interface{}) {
 func (s *session) Get(key interface{}, dst interface{}) error {
 	v, ok := s.Session.Values[key]
 	if !ok {
-		return ErrorNoSuchKey
+		return ErrNoSuchKey
 	}
 	set := reflect.ValueOf(dst)
 	if set.Kind() != reflect.Ptr {

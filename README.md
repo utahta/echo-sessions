@@ -44,7 +44,7 @@ err := s.Get("key", &v)
 Check key exists
 ```go
 var v string
-if err := s.Get("key", &v); err == sessions.ErrorNoSuchKey {
+if err := s.Get("key", &v); err == sessions.ErrNoSuchKey {
     s.Set("key", "new value")
 }
 ```
