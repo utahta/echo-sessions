@@ -84,6 +84,11 @@ func (s *session) Delete(key interface{}) {
 	delete(s.Session.Values, key)
 }
 
+func (s *session) Exists(key interface{}) bool {
+	_, ok := s.Session.Values[key]
+	return ok
+}
+
 // gorilla/sessions Flashes wrap
 func (s *session) Flashes(vars ...string) []interface{} {
 	return s.Session.Flashes(vars...)

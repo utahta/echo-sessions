@@ -168,3 +168,18 @@ func TestSession_Delete(t *testing.T) {
 		t.Error("Expected key2 empty, got key2 exists")
 	}
 }
+
+func TestSession_Exists(t *testing.T) {
+	c := testContext()
+	c.Set(ContextKey, testSession(c))
+	s := MustStart(c)
+
+	if s.Exists("key") {
+		t.Error("Expected get false, got true")
+	}
+
+	s.Set("key", "value")
+	if !s.Exists("key") {
+		t.Errorf("Expected get true, got false")
+	}
+}

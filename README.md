@@ -13,7 +13,7 @@ $ go get -u github.com/utahta/echo-sessions
 
 ## Usage
 
-Use middleware
+### Use middleware
 ```go
 import (
     gsessions "github.com/gorilla/sessions"
@@ -25,23 +25,29 @@ e := echo.New()
 e.Use(sessions.Sessions("SESSID", gsessions.NewCookieStore()))
 ```
 
-Start sessions
+### Start sessions
 ```go
 s := sessions.MustStart()
 ```
 
-Set key and value
+### Set key and value
 ```go
 s.Set("key", "value")
 ```
 
-Get value by key
+### Get value by key
 ```go
 var v string
 err := s.Get("key", &v)
 ```
 
-Check key exists
+### Check key exists
+```go
+if !s.Exists("key") {
+    s.Set("key", "new value")
+}
+```
+or
 ```go
 var v string
 if err := s.Get("key", &v); err == sessions.ErrNoSuchKey {
@@ -49,12 +55,12 @@ if err := s.Get("key", &v); err == sessions.ErrNoSuchKey {
 }
 ```
 
-Delete key
+### Delete key
 ```go
 s.Delete("key")
 ```
 
-Save this session
+### Save this session
 ```go
 err := s.Save()
 ```
