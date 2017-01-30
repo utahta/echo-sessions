@@ -16,13 +16,15 @@ $ go get -u github.com/utahta/echo-sessions
 ### Use middleware
 ```go
 import (
-    gsessions "github.com/gorilla/sessions"
+    "github.com/boj/redistore"
     "github.com/utahta/echo-sessions"
     "github.com/labstack/echo"
 )
 
+store, _ := redistore.NewRediStore(10, "tcp", ":6379", "", []byte("secret-key"))
+
 e := echo.New()
-e.Use(sessions.Sessions("SESSID", gsessions.NewCookieStore()))
+e.Use(sessions.Sessions("SESSID", store))
 ```
 
 ### Start sessions
