@@ -42,6 +42,10 @@ s.Set("key", "value")
 var v string
 err := s.Get("key", &v)
 ```
+or
+```go
+v, ok := s.GetRaw("key") // returns (interface{}, bool)
+```
 
 ### Check key exists
 ```go

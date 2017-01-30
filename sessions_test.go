@@ -137,6 +137,31 @@ func TestSession_Get(t *testing.T) {
 	}
 }
 
+func TestSession_GetRaw(t *testing.T) {
+	c := testContext()
+	c.Set(ContextKey, testSession(c))
+	s := MustStart(c)
+
+	_, ok := s.GetRaw("key")
+	if ok {
+		t.Error("Expected get false, got true")
+	}
+
+	s.Set("key", "value")
+	v, ok := s.GetRaw("key")
+	if !ok {
+		t.Error("Expected get true, got false")
+	}
+
+	vv, ok := v.(string)
+	if !ok {
+		t.Error("Expected get true, got false")
+	}
+	if vv != "value" {
+		t.Errorf("Expected get value, got %v", vv)
+	}
+}
+
 func TestSession_Delete(t *testing.T) {
 	c := testContext()
 	c.Set(ContextKey, testSession(c))

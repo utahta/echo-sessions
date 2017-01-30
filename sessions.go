@@ -80,6 +80,11 @@ func (s *session) Get(key interface{}, dst interface{}) error {
 	return nil
 }
 
+func (s *session) GetRaw(key interface{}) (v interface{}, ok bool) {
+	v, ok = s.Session.Values[key]
+	return
+}
+
 func (s *session) Delete(key interface{}) {
 	delete(s.Session.Values, key)
 }
