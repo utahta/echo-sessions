@@ -12,7 +12,6 @@ const ContextKey = "github.com/utahta/echo-sessions"
 
 var (
 	ErrSessionNotFound = errors.New("Session not found")
-	ErrNoSuchKey       = errors.New("No such key")
 )
 
 type session struct {
@@ -55,14 +54,14 @@ func (s *session) Set(key interface{}, v interface{}) {
 	s.Session.Values[key] = v
 }
 
-func (s *session) Get(key interface{}, dst interface{}) error {
+func (s *session) Get(key interface{}, dst interface{}) (bool, error) {
 	v, ok := s.Session.Values[key]
 	if !ok {
-		return ErrNoSuchKey
+		return false, nil
 	}
 	set := reflect.ValueOf(dst)
 	if set.Kind() != reflect.Ptr {
-		return errors.Errorf("Expected pointer to a struct, got %#v", dst)
+		return false, errors.Errorf("Expected pointer to a struct, got %#v", dst)
 	}
 	if !set.CanSet() {
 		set = set.Elem()
@@ -74,10 +73,10 @@ func (s *session) Get(key interface{}, dst interface{}) error {
 	}
 
 	if set.Type() != vv.Type() {
-		return errors.Errorf("Expected same type, got %v and %v", set.Type(), vv.Type())
+		return false, errors.Errorf("Expected same type, got %v and %v", set.Type(), vv.Type())
 	}
 	set.Set(vv)
-	return nil
+	return true, nil
 }
 
 func (s *session) GetRaw(key interface{}) (v interface{}, ok bool) {
@@ -90,7 +89,7 @@ func (s *session) Delete(key interface{}) {
 }
 
 func (s *session) Exists(key interface{}) bool {
-	_, ok := s.Session.Values[key]
+	_, ok := s.GetRaw(key)
 	return ok
 }
 

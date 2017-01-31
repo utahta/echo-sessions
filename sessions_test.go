@@ -91,7 +91,7 @@ func TestSession_Get(t *testing.T) {
 	// test basic type
 	s.Set(key, 100)
 	var dstInt int
-	if err := s.Get(key, &dstInt); err != nil {
+	if _, err := s.Get(key, &dstInt); err != nil {
 		t.Error(err)
 	}
 	if dstInt != 100 {
@@ -102,7 +102,7 @@ func TestSession_Get(t *testing.T) {
 	dstInt = 0
 	srcInt := 100
 	s.Set(key, &srcInt)
-	if err := s.Get(key, &dstInt); err != nil {
+	if _, err := s.Get(key, &dstInt); err != nil {
 		t.Error(err)
 	}
 	if dstInt != 100 {
@@ -118,7 +118,7 @@ func TestSession_Get(t *testing.T) {
 	srcStruct := testStruct{Num: 1, Name: "sess", Request: &http.Request{Method: "PUT"}}
 	s.Set(key, &srcStruct)
 	var dstStruct testStruct
-	if err := s.Get(key, &dstStruct); err != nil {
+	if _, err := s.Get(key, &dstStruct); err != nil {
 		t.Errorf("Expected get struct, got %v", dstStruct)
 	}
 	if srcStruct.Num != dstStruct.Num {
@@ -132,7 +132,7 @@ func TestSession_Get(t *testing.T) {
 	}
 
 	// test no such key
-	if err := s.Get("no_such_key", nil); err != ErrNoSuchKey {
+	if ok, err := s.Get("no_such_key", nil); ok {
 		t.Error(err)
 	}
 }
@@ -205,6 +205,6 @@ func TestSession_Exists(t *testing.T) {
 
 	s.Set("key", "value")
 	if !s.Exists("key") {
-		t.Errorf("Expected get true, got false")
+		t.Error("Expected get true, got false")
 	}
 }
