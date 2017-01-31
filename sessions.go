@@ -79,9 +79,16 @@ func (s *session) Get(key interface{}, dst interface{}) (bool, error) {
 	return true, nil
 }
 
-func (s *session) GetRaw(key interface{}) (v interface{}, ok bool) {
-	v, ok = s.Session.Values[key]
-	return
+func (s *session) MustGet(key interface{}, dst interface{}) bool {
+	ok, err := s.Get(key, dst)
+	if err != nil {
+		panic(err)
+	}
+	return ok
+}
+
+func (s *session) GetRaw(key interface{}) interface{} {
+	return s.Session.Values[key]
 }
 
 func (s *session) Delete(key interface{}) {
@@ -89,8 +96,7 @@ func (s *session) Delete(key interface{}) {
 }
 
 func (s *session) Exists(key interface{}) bool {
-	_, ok := s.GetRaw(key)
-	return ok
+	return s.GetRaw(key) != nil
 }
 
 // gorilla/sessions Flashes wrap

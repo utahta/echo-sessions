@@ -151,19 +151,54 @@ func TestSession_Get(t *testing.T) {
 	}
 }
 
-func TestSession_GetRaw(t *testing.T) {
+func TestSession_MustGet(t *testing.T) {
 	c := testContext()
 	c.Set(ContextKey, testSession(c))
 	s := MustStart(c)
 
-	_, ok := s.GetRaw("key")
-	if ok {
+	var dst int
+	if ok := s.MustGet("key", &dst); ok {
+		t.Error("Expected get false, got true")
+	}
+
+	s.Set("key", 100)
+	if ok := s.MustGet("key", &dst); !ok {
+		t.Error("Expected get true, got false")
+	}
+	if dst != 100 {
+		t.Errorf("Expected get 100, got %d", dst)
+	}
+}
+
+func TestSession_MustGetPanic(t *testing.T) {
+	c := testContext()
+	c.Set(ContextKey, testSession(c))
+	s := MustStart(c)
+	defer func() {
+		if r := recover(); r == nil {
+			t.Error("Expected get panic")
+		}
+	}()
+
+	var dst int
+	s.Set("key", 100)
+	s.MustGet("key", dst)
+}
+
+func TestSession_GetRaw(t *testing.T) {
+	c := testContext()
+	c.Set(ContextKey, testSession(c))
+	s := MustStart(c)
+	var v interface{}
+
+	v = s.GetRaw("key")
+	if v != nil {
 		t.Error("Expected get false, got true")
 	}
 
 	s.Set("key", "value")
-	v, ok := s.GetRaw("key")
-	if !ok {
+	v = s.GetRaw("key")
+	if v == nil {
 		t.Error("Expected get true, got false")
 	}
 

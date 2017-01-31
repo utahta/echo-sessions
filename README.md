@@ -43,10 +43,15 @@ s.Set("key", "value")
 var v string
 ok, err := s.Get("key", &v)
 ```
+or
+```go
+var v string
+ok := s.MustGet("key", &v)
+```
 
 ### Get raw value by key
 ```go
-v, ok := s.GetRaw("key") // returns (interface{}, bool)
+v := s.GetRaw("key") // returns (interface{})
 ```
 
 ### Check key exists
@@ -58,8 +63,12 @@ if !s.Exists("key") {
 or
 ```go
 var v string
-if ok, err := s.Get("key", &v); !ok && err == nil {
-    s.Set("key", "new value")
+if ok, err := s.Get("example1", &v); !ok && err == nil {
+    s.Set("example1", "new value")
+}
+
+if ok := s.MustGet("example2", &v); !ok {
+    s.Set("example2", "new value")
 }
 ```
 
