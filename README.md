@@ -40,9 +40,10 @@ s.Set("key", "value")
 ### Get value by key
 ```go
 var v string
-err := s.Get("key", &v)
+ok, err := s.Get("key", &v)
 ```
-or
+
+### Get raw value by key
 ```go
 v, ok := s.GetRaw("key") // returns (interface{}, bool)
 ```
@@ -56,7 +57,7 @@ if !s.Exists("key") {
 or
 ```go
 var v string
-if err := s.Get("key", &v); err == sessions.ErrNoSuchKey {
+if ok, err := s.Get("key", &v); !ok && err == nil {
     s.Set("key", "new value")
 }
 ```

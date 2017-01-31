@@ -91,7 +91,7 @@ func TestSession_Get(t *testing.T) {
 	// test basic type
 	s.Set(key, 100)
 	var dstInt int
-	if _, err := s.Get(key, &dstInt); err != nil {
+	if ok, err := s.Get(key, &dstInt); !ok && err == nil {
 		t.Error(err)
 	}
 	if dstInt != 100 {
@@ -102,7 +102,7 @@ func TestSession_Get(t *testing.T) {
 	dstInt = 0
 	srcInt := 100
 	s.Set(key, &srcInt)
-	if _, err := s.Get(key, &dstInt); err != nil {
+	if ok, err := s.Get(key, &dstInt); !ok && err == nil {
 		t.Error(err)
 	}
 	if dstInt != 100 {
@@ -118,7 +118,7 @@ func TestSession_Get(t *testing.T) {
 	srcStruct := testStruct{Num: 1, Name: "sess", Request: &http.Request{Method: "PUT"}}
 	s.Set(key, &srcStruct)
 	var dstStruct testStruct
-	if _, err := s.Get(key, &dstStruct); err != nil {
+	if ok, err := s.Get(key, &dstStruct); !ok && err == nil {
 		t.Errorf("Expected get struct, got %v", dstStruct)
 	}
 	if srcStruct.Num != dstStruct.Num {
@@ -129,6 +129,20 @@ func TestSession_Get(t *testing.T) {
 	}
 	if srcStruct.Request.Method != dstStruct.Request.Method {
 		t.Errorf("Expected get struct Request.Method, got %v", dstStruct.Request.Method)
+	}
+
+	// test not pointer
+	dstInt = 0
+	if _, err := s.Get(key, dstInt); err == nil {
+		t.Error("Expected get error, got nil")
+	}
+
+	// test not compared type
+	srcFloat := 1.0
+	dstInt = 0
+	s.Set(key, &srcFloat)
+	if _, err := s.Get(key, &dstInt); err == nil {
+		t.Error("Expected get error, got nil")
 	}
 
 	// test no such key
