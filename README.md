@@ -1,6 +1,6 @@
 # Sessions middleware for Echo
 
-[![GitHub release](https://img.shields.io/github/release/utahta/echo-sessions.svg)]() 
+[![GitHub release](https://img.shields.io/github/release/utahta/echo-sessions.svg)](https://github.com/utahta/echo-sessions/releases) 
 [![Build Status](https://travis-ci.org/utahta/echo-sessions.svg?branch=master)](https://travis-ci.org/utahta/echo-sessions)
 
 This is a package of sessions middleware for Echo.  
