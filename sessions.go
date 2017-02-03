@@ -8,7 +8,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-const ContextKey = "github.com/utahta/echo-sessions"
+const contextKey = "github.com/utahta/echo-sessions"
 
 var (
 	ErrSessionNotFound = errors.New("Session not found")
@@ -21,9 +21,9 @@ type session struct {
 	Session *sessions.Session
 }
 
-// Session start
+// Get the session handler
 func Start(c echo.Context) (*session, error) {
-	s, ok := c.Get(ContextKey).(*session)
+	s, ok := c.Get(contextKey).(*session)
 	if !ok {
 		return nil, ErrSessionNotFound
 	}
@@ -40,7 +40,7 @@ func Start(c echo.Context) (*session, error) {
 	return s, nil
 }
 
-// Session start
+// Get the session handler
 // if get error, cause panic
 func MustStart(c echo.Context) *session {
 	s, err := Start(c)
@@ -54,9 +54,13 @@ func (s *session) Set(key interface{}, v interface{}) {
 	s.Session.Values[key] = v
 }
 
+func (s *session) GetRaw(key interface{}) interface{} {
+	return s.Session.Values[key]
+}
+
 func (s *session) Get(key interface{}, dst interface{}) (bool, error) {
-	v, ok := s.Session.Values[key]
-	if !ok {
+	v := s.GetRaw(key)
+	if v == nil {
 		return false, nil
 	}
 	set := reflect.ValueOf(dst)
@@ -87,16 +91,18 @@ func (s *session) MustGet(key interface{}, dst interface{}) bool {
 	return ok
 }
 
-func (s *session) GetRaw(key interface{}) interface{} {
-	return s.Session.Values[key]
-}
-
 func (s *session) Delete(key interface{}) {
 	delete(s.Session.Values, key)
 }
 
 func (s *session) Exists(key interface{}) bool {
 	return s.GetRaw(key) != nil
+}
+
+func (s *session) Clear() {
+	for k := range s.Session.Values {
+		s.Delete(k)
+	}
 }
 
 // gorilla/sessions Flashes wrap

@@ -9,8 +9,7 @@ import (
 func Sessions(name string, store sessions.Store) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
-			s := &session{ctx: c, name: name, store: store}
-			c.Set(ContextKey, s)
+			c.Set(contextKey, &session{ctx: c, name: name, store: store})
 			return next(c)
 		}
 	}

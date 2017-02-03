@@ -12,9 +12,8 @@ A thin [gorilla/sessions](https://github.com/gorilla/sessions) wrapper.
 $ go get -u github.com/utahta/echo-sessions
 ```
 
-## Usage
+## Middleware usage
 
-### Use sessions middleware
 ```go
 import (
     "github.com/boj/redistore"
@@ -28,7 +27,39 @@ e := echo.New()
 e.Use(sessions.Sessions("SESSID", store))
 ```
 
-### Start session
+## Helpers usage
+
+```go
+import "github.com/utahta/echo-sessions"
+
+func example(c echo.Context) {
+    sessions.Set(c, "key", "value")
+    
+    dst := sessions.GetRaw(c, "key")
+    
+    var dst string
+    ok, err := sessions.Get(c, "key", &dst)
+    
+    var dst string
+    ok := sessions.MustGet(c, "key", &dst)
+    
+    sessions.Delete(c, "key")
+    
+    ok := sessions.Exists(c, "key")
+    
+    sessions.Clear(c)
+    
+    sessions.Flashes(c vars...)
+    
+    sessions.AddFlash(c, value, vars...)
+    
+    err := sessions.Save(c)
+}
+```
+
+## Learn more
+
+### Get the session handler
 ```go
 s := sessions.MustStart()
 ```

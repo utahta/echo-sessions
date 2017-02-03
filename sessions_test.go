@@ -24,7 +24,7 @@ func TestStart(t *testing.T) {
 		t.Errorf("Expected get error session not found, got %v", err)
 	}
 
-	c.Set(ContextKey, testSession(c))
+	c.Set(contextKey, testSession(c))
 	s, err := Start(c)
 	if err != nil {
 		t.Error(err)
@@ -37,7 +37,7 @@ func TestStart(t *testing.T) {
 
 func TestMustStart(t *testing.T) {
 	c := testContext()
-	c.Set(ContextKey, testSession(c))
+	c.Set(contextKey, testSession(c))
 
 	if s := MustStart(c); s == nil {
 		t.Error("Expected get session, got nil")
@@ -57,7 +57,7 @@ func TestMustStartPanic(t *testing.T) {
 
 func TestSession_Set(t *testing.T) {
 	c := testContext()
-	c.Set(ContextKey, testSession(c))
+	c.Set(contextKey, testSession(c))
 	s := MustStart(c)
 
 	tests := []struct {
@@ -84,7 +84,7 @@ func TestSession_Set(t *testing.T) {
 
 func TestSession_Get(t *testing.T) {
 	c := testContext()
-	c.Set(ContextKey, testSession(c))
+	c.Set(contextKey, testSession(c))
 	s := MustStart(c)
 	const key = "key"
 
@@ -153,7 +153,7 @@ func TestSession_Get(t *testing.T) {
 
 func TestSession_MustGet(t *testing.T) {
 	c := testContext()
-	c.Set(ContextKey, testSession(c))
+	c.Set(contextKey, testSession(c))
 	s := MustStart(c)
 
 	var dst int
@@ -172,7 +172,7 @@ func TestSession_MustGet(t *testing.T) {
 
 func TestSession_MustGetPanic(t *testing.T) {
 	c := testContext()
-	c.Set(ContextKey, testSession(c))
+	c.Set(contextKey, testSession(c))
 	s := MustStart(c)
 	defer func() {
 		if r := recover(); r == nil {
@@ -187,7 +187,7 @@ func TestSession_MustGetPanic(t *testing.T) {
 
 func TestSession_GetRaw(t *testing.T) {
 	c := testContext()
-	c.Set(ContextKey, testSession(c))
+	c.Set(contextKey, testSession(c))
 	s := MustStart(c)
 	var v interface{}
 
@@ -213,7 +213,7 @@ func TestSession_GetRaw(t *testing.T) {
 
 func TestSession_Delete(t *testing.T) {
 	c := testContext()
-	c.Set(ContextKey, testSession(c))
+	c.Set(contextKey, testSession(c))
 	s := MustStart(c)
 
 	s.Set("key1", 100)
@@ -245,7 +245,7 @@ func TestSession_Delete(t *testing.T) {
 
 func TestSession_Exists(t *testing.T) {
 	c := testContext()
-	c.Set(ContextKey, testSession(c))
+	c.Set(contextKey, testSession(c))
 	s := MustStart(c)
 
 	if s.Exists("key") {
