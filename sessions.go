@@ -116,5 +116,5 @@ func (s *session) AddFlash(value interface{}, vars ...string) {
 }
 
 func (s *session) Save() error {
-	return s.Session.Save(s.ctx.Request(), s.ctx.Response().Writer())
+	return s.Session.Save(s.ctx.Request(), s.ctx.Response().Writer)
 }

@@ -1,43 +1,41 @@
-hash: c63a3bb8b0ea7c2895c7402ba25fe9376166d6140f9616a8b678d8e7720bf376
-updated: 2017-01-30T01:41:18.701086711+09:00
+hash: c8f677f38fbca3eeb047edd4b684faf1765981d2a3e67566cb90c314ec373251
+updated: 2017-03-16T18:15:01.625061584+09:00
 imports:
 - name: github.com/gorilla/context
   version: 08b5f424b9271eedf6f9f0ce86cb9396ed337a42
 - name: github.com/gorilla/securecookie
-  version: 667fe4e3466a040b780561fe9b51a83a3753eefc
+  version: e59506cc896acb7f7bf732d4fdf5e25f7ccd8983
 - name: github.com/gorilla/sessions
   version: ca9ada44574153444b00d3fd9c8559e4cc95f896
 - name: github.com/labstack/echo
-  version: 8d504c1b699c757b267255c53b3e5219f9974abc
+  version: 948d607539e92f3974d8f24951c8975d7342e24a
 - name: github.com/labstack/gommon
-  version: f72d3c883f8ea180da8f085dd320804c41332ad1
+  version: 9cedb429ffbe71a32a3ae7c65fd109cb7ae07804
   subpackages:
   - color
   - log
 - name: github.com/mattn/go-colorable
-  version: d228849504861217f796da67fae4f6e347643f15
+  version: a392f450ea64cee2b268dfaacdc2502b50a22b18
 - name: github.com/mattn/go-isatty
-  version: 30a891c33c7cde7b02a981314b4228ec99380cca
+  version: 57fdcb988a5c543893cc61bce354a6e24ab70022
 - name: github.com/pkg/errors
-  version: 248dadf4e9068a0b3e79f02ed0a610d935de5302
-- name: github.com/tylerb/graceful
-  version: 0e9129e9c6d47da90dc0c188b26bd7bb1dab53cd
+  version: bfd5150e4e41705ded2129ec33379de1cb90b513
 - name: github.com/valyala/bytebufferpool
   version: e746df99fe4a3986f4d4f79e13c1e0117ce9c2f7
 - name: github.com/valyala/fasttemplate
-  version: d090d65668a286d9a180d43a19dfdc5dcad8fe88
+  version: dcecefd839c4193db0d35b88ec65b4c12d360ab0
 - name: golang.org/x/crypto
-  version: 41d678d1df78cd0410143162dff954e6dc09300f
+  version: 728b753d0135da6801d45a38e6f43ff55779c5c2
   subpackages:
   - acme
   - acme/autocert
 - name: golang.org/x/net
-  version: f2499483f923065a842d38eb4c7f1927e6fc6e6d
+  version: 10c134ea0df15f7e34d789338c7a2d76cc7a3ab9
   subpackages:
   - context
   - context/ctxhttp
 - name: golang.org/x/sys
-  version: d75a52659825e75fff6158388dddc6a5b04f9ba5
+  version: 99f16d856c9836c42d24e7ab64ea72916925fa97
   subpackages:
   - unix
 testImports: []
